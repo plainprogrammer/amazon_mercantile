@@ -5,6 +5,8 @@ unless ENV['COVERAGE'] == 'no'
   SimpleCov.start do
     add_filter '/test/'
   end
+
+  SimpleCov.minimum_coverage 90
 end
 
 require 'minitest/autorun'

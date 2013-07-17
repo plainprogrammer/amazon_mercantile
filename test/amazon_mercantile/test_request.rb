@@ -2,10 +2,14 @@ require 'minitest_helper'
 
 describe AmazonMercantile::Request do
   before :all do
-    stub_request(:any, 'mws.amazonservices.com')
+    stub_request(:any, /^https:\/\/mws\.amazonservices\.com/)
   end
 
-  let(:request) { AmazonMercantile::Request.new(:post, '/', action: :submit_feed, text_data: 'test') }
+  after :all do
+    WebMock.reset!
+  end
+
+  let(:request) { AmazonMercantile::Request.new(:post, '/', action: :submit_feed, body: 'test') }
 
   describe '.new' do
     it { lambda{ AmazonMercantile::Request.new() }.must_raise ArgumentError }
@@ -23,6 +27,10 @@ describe AmazonMercantile::Request do
   end
 
   describe '#response' do
+    before :each do
+      request.submit
+    end
+
     it { request.response.must_be_instance_of AmazonMercantile::Response }
   end
 end

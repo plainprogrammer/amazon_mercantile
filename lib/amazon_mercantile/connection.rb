@@ -11,7 +11,7 @@ module AmazonMercantile
       config.access_key  = options[:aws_access_key] || raise(ArgumentError, 'AWS Access Key is required.')
       config.secret_key  = options[:aws_secret_key] || raise(ArgumentError, 'AWS Secret Key is required.')
 
-      config.target = options[:target] || 'aws.amazonservices.com'
+      config.target = options[:target] || 'mws.amazonservices.com'
 
       setup_http
       self
@@ -19,7 +19,7 @@ module AmazonMercantile
 
     def request(request)
       klass = "Net::HTTP::#{request.verb.capitalize}".constantize
-      http_request = klass.new("/?#{request.canonical_query_string}")
+      http_request = klass.new("/?#{request.query_string}")
       http_request.body = request.body
       http_request['Content-Type'] = request.content_type || 'text/xml'
       http_request['Content-MD5']  = request.content_hash
