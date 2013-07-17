@@ -4,7 +4,8 @@
 [![Code Climate](https://codeclimate.com/github/plainprogrammer/amazon_mercantile.png)](https://codeclimate.com/github/plainprogrammer/amazon_mercantile)
 [![Dependency Status](https://gemnasium.com/plainprogrammer/amazon_mercantile.png)](https://gemnasium.com/plainprogrammer/amazon_mercantile)
 
-TODO: Write a gem description
+Amazon Mercantile provides a library for working with the Amazon Marketplace Web Service (MWS) to update data for
+third-party sellers working with Amazon.
 
 ## Installation
 
