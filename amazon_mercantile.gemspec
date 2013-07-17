@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = %w{jamest@plainprograms.com}
   spec.description   = %q{A working library to work with Amazon's Marketplace Web Service (MWS).}
   spec.summary       = %q{Amazon Marketplace Web Service (MWS) library}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/plainprogrammer/amazon_mercantile'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'simplecov'
 end
