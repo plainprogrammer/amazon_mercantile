@@ -5,6 +5,7 @@ require 'net/http'
 module AmazonMercantile
   class Request
     attr_reader :target, :path, :action, :timestamp, :signature, :response
+    attr_accessor :body
 
     def initialize(verb, path, options)
       @verb = verb.to_s.downcase.to_sym || raise(ArgumentError, 'No Verb Specified')
@@ -18,18 +19,12 @@ module AmazonMercantile
       prepare
       sign
 
-      http = Net::HTTP.new(@target, 443)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-      klass = "Net::HTTP::#{@verb.to_s.capitalize}".constantize
-      request = klass.new("/?#{canonical_query_string}")
-      request.body = @body
-      request['Content-Type'] = @content_type
-      request['Content-MD5']  = [[Digest::MD5.hexdigest(request.body)].pack("H*")].pack("m").strip
-
-      @response = AmazonMercantile::Response.new(http.request(request))
+      @response = AmazonMercantile::Connection.request(self)
       @response.succeeded?
+    end
+
+    def content_hash
+      [[Digest::MD5.hexdigest(body)].pack("H*")].pack("m").strip
     end
 
     # Custom Accessors

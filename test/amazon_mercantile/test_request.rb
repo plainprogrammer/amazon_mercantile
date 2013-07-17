@@ -1,7 +1,11 @@
 require 'minitest_helper'
 
 describe AmazonMercantile::Request do
-  let(:valid_request) { AmazonMercantile::Request.new(:post, '/', action: :submit_feed, text_data: 'test') }
+  before :all do
+    stub_request(:any, 'mws.amazonservices.com')
+  end
+
+  let(:request) { AmazonMercantile::Request.new(:post, '/', action: :submit_feed, text_data: 'test') }
 
   describe '.new' do
     it { lambda{ AmazonMercantile::Request.new() }.must_raise ArgumentError }
@@ -11,14 +15,14 @@ describe AmazonMercantile::Request do
 
   describe '#submit' do
     before :each do
-      valid_request.submit
+      request.submit
     end
 
-    it { valid_request.timestamp.wont_be_nil }
-    it { valid_request.signature.wont_be_nil }
+    it { request.timestamp.wont_be_nil }
+    it { request.signature.wont_be_nil }
   end
 
   describe '#response' do
-    it { valid_request.response.must_be_instance_of AmazonMercantile::Response }
+    it { request.response.must_be_instance_of AmazonMercantile::Response }
   end
 end
