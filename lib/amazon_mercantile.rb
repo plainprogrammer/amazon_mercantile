@@ -1,5 +1,13 @@
-require "amazon_mercantile/version"
+require 'amazon_mercantile/version'
+
+require 'amazon_mercantile/connection'
 
 module AmazonMercantile
-  # Your code goes here...
+  def self.establish_connection(options = {})
+    @@connection = Connection.new(options)
+  end
+
+  def self.connection
+    @@connection ||= nil
+  end
 end

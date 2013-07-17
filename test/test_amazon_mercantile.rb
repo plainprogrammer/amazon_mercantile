@@ -1,11 +1,24 @@
 require 'minitest_helper'
 
-class TestAmazonMercantile < MiniTest::Unit::TestCase
-  def test_that_it_has_a_version_number
-    refute_nil ::AmazonMercantile::VERSION
+describe AmazonMercantile do
+  let(:valid_options) {
+    {
+      merchant_id:    '',
+      marketplace_id: '',
+      access_key:     '',
+      secret_key:     ''
+    }
+  }
+
+  describe '.establish_connection' do
+    it { AmazonMercantile.establish_connection(valid_options).must_equal true }
   end
 
-  def test_it_does_something_useful
-    assert false
+  describe '.connection' do
+    before(:each) do
+      AmazonMercantile.establish_connection(valid_options)
+    end
+
+    it { AmazonMercantile.connection.must_be_instance_of AmazonMercantile::Connection }
   end
 end
